@@ -70,12 +70,25 @@ app.controller("form", function($scope,$localStorage,myservices){
 
     $scope.submitdata=function() {
         debugger;
-        myservices.userarry.push($scope.user);
-        localStorage.setItem('name', JSON.stringify($scope.user.name));
-        localStorage.setItem('email', JSON.stringify($scope.user.email));
+        if($scope.user.check===true){
+            myservices.userarry.push($scope.user);
+            localStorage.setItem('name', JSON.stringify($scope.user.name));
+            localStorage.setItem('email', JSON.stringify($scope.user.email));
+            $scope.user={};
+            alert("Yooh, your name and email is saved in the storege.");
+        }
+        else {
+            $scope.user={};
+            alert("your name and email is not saved in the storege.");
+        }
 
-        
-  };
+
+    };
+
+    $scope.returnname = localStorage.getItem('name');
+    $scope.returnemail = localStorage.getItem('email');
+    $scope.user.name=JSON.parse($scope.returnname);
+    $scope.user.email=JSON.parse($scope.returnemail);
 
 
 });
@@ -86,7 +99,7 @@ app.controller("storage", function($scope, $localStorage) {
 
     $scope.save = function() {
         $localStorage.message = $scope.somedata;
-    }
+    };
 
     $scope.load = function() {
         $scope.data = $localStorage.message;
