@@ -63,7 +63,7 @@ app.controller("default", function($scope, $localStorage, $http) {
 
 });
 
-app.controller("form", function($scope,$localStorage,myservices){
+app.controller("form",['$scope','$localStorage','myservices','$base64', function($scope,$localStorage,myservices,$base64){
 
     $scope.user={};
 
@@ -71,9 +71,11 @@ app.controller("form", function($scope,$localStorage,myservices){
     $scope.submitdata=function() {
         debugger;
         if($scope.user.check===true){
-            myservices.userarry.push($scope.user);
-            localStorage.setItem('name', JSON.stringify($scope.user.name));
-            localStorage.setItem('email', JSON.stringify($scope.user.email));
+            var encodednm=$base64.encode($scope.user.name);
+            var encodedeml=$base64.encode($scope.user.email);
+
+            localStorage.setItem('name', JSON.stringify(encodednm));
+            localStorage.setItem('email', JSON.stringify(encodedeml));
             $scope.user={};
             alert("Yooh, your name and email is saved in the storege.");
         }
@@ -85,13 +87,19 @@ app.controller("form", function($scope,$localStorage,myservices){
 
     };
 
-    $scope.returnname = localStorage.getItem('name');
-    $scope.returnemail = localStorage.getItem('email');
-    $scope.user.name=JSON.parse($scope.returnname);
-    $scope.user.email=JSON.parse($scope.returnemail);
+
+    var returnname = localStorage.getItem('name');
+    var returnemail = localStorage.getItem('email');
+    var decodednm=JSON.parse(returnname);
+    var decodedeml=JSON.parse(returnemail);
+
+    $scope.user.name =$base64.decode(decodednm);
+    $scope.user.email=$base64.decode(decodedeml);
 
 
-});
+
+
+}]);
 
 
 

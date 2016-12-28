@@ -1,7 +1,7 @@
 /**
  * Created by abc on 16/06/2016.
  */
-var app=angular.module('app',['ngRoute','ngStorage']);
+var app=angular.module('app',['ngRoute','ngStorage', 'base64']);
 
 
 app.config(function($routeProvider){
